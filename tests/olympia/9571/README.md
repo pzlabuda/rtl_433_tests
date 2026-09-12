@@ -33,6 +33,16 @@ Decoded by `olympia_9571` (protocol 386), preamble `aa aa 2d d4` followed by a
   so a pulse detector that only feeds the FSK demodulator during the first
   OOK pulse misclassifies the whole transmission as OOK and decodes
   nothing. Requires the per-pulse FSK demodulation fix in `pulse_detect.c`.
+- `pir_motion_d6f84d_868.465M_250k.cu8`: PIR-Motion detector, ID d6f84d,
+  motion, dead-center 868.465 MHz capture at 250 kHz. Detector regression
+  sample: a short carrier blip precedes each ~38 ms FSK carrier pulse, so
+  the FSK data only appears in non-leading burst pulses. At this sample
+  rate the burst is sparser and the frequency spread wider than at
+  1000 kHz, so it additionally requires the low sample-rate burst window
+  in the FSK burst detection (`PD_MIN/MAX_FSK_BURST_SLOW`,
+  `PD_MIN/MAX_FSK_SPREAD_SLOW`).
+- `pir_idle_d6f84d_868.465M_250k.cu8`: same PIR-Motion, idle, 868.465 MHz
+  at 250 kHz.
 
 Verify manually with:
 
@@ -41,3 +51,5 @@ Verify manually with:
     rtl_433 -r door_open_4ddf3b_868.4M_2048k.cu8
     rtl_433 -r keyfob_arm_home_only_19e755_868.5M_1200k.cu8
     rtl_433 -r pir_motion_d6f84d_868.42M_1000k.cu8
+    rtl_433 -r pir_motion_d6f84d_868.465M_250k.cu8
+    rtl_433 -r pir_idle_d6f84d_868.465M_250k.cu8
