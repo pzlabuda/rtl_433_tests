@@ -27,6 +27,12 @@ Decoded by `olympia_9571` (protocol 386), preamble `aa aa 2d d4` followed by a
   battery just inserted
 - `keyfob_arm_home_only_19e755_868.5M_1200k.cu8`: Keyfob remote, ID 19e755,
   "arm home only" command
+- `pir_motion_d6f84d_868.42M_1000k.cu8`: PIR-Motion detector, ID d6f84d,
+  motion, dead-center 868.42 MHz capture at 1000 kHz. This is a detector
+  regression sample: a leading ~84 us carrier blip precedes the FSK data,
+  so a pulse detector that only feeds the FSK demodulator during the first
+  OOK pulse misclassifies the whole transmission as OOK and decodes
+  nothing. Requires the per-pulse FSK demodulation fix in `pulse_detect.c`.
 
 Verify manually with:
 
@@ -34,3 +40,4 @@ Verify manually with:
     rtl_433 -r pir_idle_d6f84d_868.3M_1000k.cu8
     rtl_433 -r door_open_4ddf3b_868.4M_2048k.cu8
     rtl_433 -r keyfob_arm_home_only_19e755_868.5M_1200k.cu8
+    rtl_433 -r pir_motion_d6f84d_868.42M_1000k.cu8
